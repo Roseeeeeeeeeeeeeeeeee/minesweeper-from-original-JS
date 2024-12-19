@@ -27,6 +27,9 @@ h1{
     color: white;
     border-radius: 5px;
 }
+button.active{
+    background-color: rgb(19, 131, 131);
+}
 .info{
     margin-top: 20px;
     text-align: center;
