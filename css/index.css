@@ -34,3 +34,19 @@ button.active{
     margin-top: 20px;
     text-align: center;
 }
+table{
+    background-color: rgb(202, 204, 205);
+    margin: 40px auto;
+    border-spacing: 1px;
+  
+}
+table td{
+    height: 24px;
+    width: 24px;
+    border: 2px solid;
+    border-color: white gray gray white;
+    text-align: center;
+    line-height: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
