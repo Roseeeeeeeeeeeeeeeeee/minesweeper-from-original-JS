@@ -14,17 +14,17 @@ let config = {
         mid :{
             row : 15,
             col : 15,
-            mineNum : 30 
+            mineNum : 40
         },
         high :{
             row : 25,
             col : 25,
-            mineNum : 40 
+            mineNum : 100 
         },
     },
 
 }
 
-let currentLevel = config.level.low;
+let currentLevel = config.level.mid;
 let mineArray = [];
 let tableInfo  = [];
