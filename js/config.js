@@ -14,7 +14,7 @@ let config = {
         mid :{
             row : 15,
             col : 15,
-            mineNum : 40
+            mineNum : 70
         },
         high :{
             row : 25,
