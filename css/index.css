@@ -35,7 +35,7 @@ button.active{
     text-align: center;
 }
 table{
-    background-color: rgb(202, 204, 205);
+    background-color: rgb(175, 181, 184);
     margin: 40px auto;
     border-spacing: 1px;
   
@@ -43,12 +43,16 @@ table{
 table td{
     height: 24px;
     width: 24px;
+   
     border: 2px solid;
+    background: #ccc;
     border-color: white gray gray white;
+    
     text-align: center;
     line-height: 24px;
     font-weight: bold;
     cursor: pointer;
+   
 }
 
 
@@ -56,14 +60,66 @@ td>div{
 
     width: 100%;
     height: 100%;
+    
    
 }
 
 td>div.mine{
     background: #ccc url('../assets/mine.png') center/cover no-repeat;
-    opacity: .4;
+    opacity: 0;
 }
 
 td>div.flag{
     background :#ccc url('../assets/flag.png')  center/cover no-repeat;
+}
+
+.error>div.mine{
+    background: red url('../assets/mine.png') center/cover no-repeat;
+}
+td>div.right{
+    background: green url('../assets/mine.png') center/cover no-repeat;
+}
+td>div.zero{
+    border-color: #e11111;
+    background-color: #d9d9d9;
+}
+td>div.one{
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    color: aqua;
+}
+td>div.two{
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    color: rgb(236, 162, 239);
+}
+td>div.three{
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    color: rgb(46, 174, 76);
+}
+td>div.four{
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    color: rgb(18, 24, 209);
+}
+td>div.five{
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    color: rgb(200, 80, 51);
+}
+td>div.six{
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    color: rgb(103, 6, 6);
+}
+td>div.seven{
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    color: rgb(174, 212, 22);
+}
+td>div.eight{
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+    color: rgb(255, 0, 0);
 }
