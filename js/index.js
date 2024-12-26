@@ -1,10 +1,8 @@
 /**
  * 游戏主逻辑
  */
-
-
-
-
+let mn = $('.minenum');
+let fn = $('.flagnum');
 /**
  * 生成雷的位置
  * @returns 雷位置数组
@@ -63,26 +61,62 @@ function drawTable(){
     mineArea.appendChild(table);
 
 }
+function clearScene(){
+    mineArea.innerHTML = '';
+    flagArray = [];
+    mn.innerHTML = currentLevel.mineNum;
+    fn.innerHTML = "0";
+    flagNum = 0;
+}
 /**
  * 初始化游戏
  */
 function initGame(){
+    clearScene()
+    
+    
     // 1.初始化雷的位置（随机）
     mineArray = initMine();
     // 2.绘制雷阵
     drawTable();
+    // 2、点击事件
+    mineArea.onmousedown  = function(e){
+        
+        let index = e.target.dataset.id;
+        if(index != undefined){
+        //左键
+        if(e.button === 0){
+            //点击到雷直接结束游戏
+            index = parseInt(index);
+            if(mineArray.includes(index)){
+                showAnswer(e.target);
+                gameOver(false);
+                return;
+            }
+            else
+            {
+            //点击的不是雷，进行·区域搜索统计周围的雷数
+                areaSearch(e.target);
+            }
+        }
+        //右键插旗
+        else if(e.button == 2)
+        {
+            plantFlag(e.target);
+        }
+    }
     
+}
 }
 /**
  * 踩雷了
  * @param {HTMLElement} target 
  */
-function clickMine(target){
+function showAnswer(target){
 
     let arr  = tableInfo.flat();
     let divs = $$('td>div');
-    
-    target.parentNode.classList.add('error');
+    target.classList.add('error');
     for(let i = 0 ; i < arr.length;i++)
     {
         if(mineArray.includes(i))
@@ -90,8 +124,17 @@ function clickMine(target){
             divs[i].style.opacity = 1;
         }
     }
-    let res = window.confirm("游戏失败");
-    
+    for(let i = 0 ; i < flagArray.length;i++)
+    {
+        if(flagArray[i].classList.contains('mine'))
+        {
+            flagArray[i].classList.add('right');
+        }
+        else{
+            flagArray[i].classList.add('error');
+        }
+    }
+    mineArea.onmousedown = null;
 }
 /**
  * 
@@ -126,6 +169,36 @@ function transToDom(jsObj){
  * 区域搜索     
  * @param {HTMLElement} target 
  */
+
+/**、
+ * 结束游戏
+ * @param {boolean} isWin
+ */
+function gameOver(isWin){
+    let info;
+    if(isWin)
+    {
+        info ='恭喜过关'
+    }else{
+       info = '游戏失败'
+    }
+    setTimeout(function(){
+        window.alert(info);
+    },200)
+}
+/**
+ * 
+ * @returns 返回一个布尔值，用于判断是否·所有旗都插对了
+ */
+function isWin(){
+    for(let i = 0 ; i < flagArray.length ;i++){
+        if(!flagArray[i].classList.contains('mine'))
+        {
+            return false
+        }
+    }
+    return true;
+}
 function areaSearch(target){
     if(!target.classList.contains('flag')){
     target.classList.remove('canflag');
@@ -180,33 +253,69 @@ function areaSearch(target){
     }
 }
 /**
+ * 插旗
+ * @param {HTMLElement} target 
+ */
+function plantFlag(target){
+   
+   
+     if(target.classList.contains('canflag'))
+     {
+        
+        if(target.classList.contains('flag')){
+            target.classList.remove('flag');
+            let index = flagArray.indexOf(target);
+            flagArray.splice(index,1);
+            flagNum--;
+        }else{
+            target.classList.add('flag');
+            flagArray.push(target);
+            flagNum++;
+        }
+     }
+    fn.innerHTML = flagNum;
+    if(flagNum == mineNum)
+    {
+        showAnswer(target);
+        gameOver(isWin());
+    }
+     
+}
+/**
  * 事件绑定函数
  */
 function bindEvent(){
-    // 1、点击事件
-    let mineArea = $('.minearea');
-    mineArea.onmousedown  = function(e){
-        let index = e.target.dataset.id;
-        index = parseInt(index);
-        if(index){
-        //左键
-        if(e.button === 0){
-            //点击到雷直接结束游戏
-            if(mineArray.includes(index)){
-                clickMine(e.target);
-                return;
+    //取消右键的默认事件
+    mineArea.oncontextmenu = (e) =>{
+        e.preventDefault();
+    }
+    // 1.选择游戏模式
+    let level = $('.level');
+    level.onclick = function(e){
+
+        let chooseBtn = e.target;
+        let preBtn = $('.active');
+        preBtn.classList.remove('active');
+        chooseBtn.classList.add('active');
+        switch(chooseBtn.innerHTML)
+        {
+            case("初级"):{
+                currentLevel = config.level.low;
+                break;
             }
-            else
-            {
-            //点击的不是雷，进行·区域搜索统计周围的雷数
-                areaSearch(e.target);
+            case("中级"):{
+                currentLevel = config.level.mid
+                break;
+            }
+            case("高级"):{
+                currentLevel = config.level.high;
+                break;
             }
         }
-       
-        
-        
+       initGame();
+
     }
-}
+    
     
     
 }

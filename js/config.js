@@ -25,6 +25,12 @@ let config = {
 
 }
 
-let currentLevel = config.level.mid;
+let currentLevel = config.level.low;
 let mineArray = [];
 let tableInfo  = [];
+let flagArray = [];
+let mineNum = currentLevel.mineNum;
+let flagNum = 0;
+let mineArea = $('.minearea');
+
+
